@@ -1,5 +1,6 @@
 let preferences_data;
 
+// gen pref
 document.getElementById('generate-btn').addEventListener('click', async () => {
     const response = await fetch('/generate-preferences', {
         method: 'POST',
@@ -24,11 +25,18 @@ document.getElementById('calculate-btn').addEventListener('click', async () => {
     createResult(data)
 });
 
-function createBasicVisual(data) {
+
+function clearAll(){
     const visual = document.querySelector('.visual');
-    // Vider le contenu précédent
+    const rapport = document.querySelector('.rapport');
     visual.innerHTML = '';
-    
+    rapport.innerHTML = '';
+}
+function createBasicVisual(data) {
+    clearAll()
+
+    const visual = document.querySelector('.visual');
+
     // Colonne gauche (Students)
     const leftColumn = document.createElement('div');
     leftColumn.className = 'column';
@@ -41,7 +49,7 @@ function createBasicVisual(data) {
         const preferences = data.s[studentKey];
         const student = document.createElement('div');
         student.className = 'basicItem';
-        student.textContent = `Student ${index} : [${preferences.join(', ')}]`;
+        student.innerHTML = `🧑‍🎓 <b>Student ${index}</b> : <small>[${preferences.join(', ')}]</small>`;
         leftColumn.appendChild(student);
     }
 
@@ -56,7 +64,7 @@ function createBasicVisual(data) {
         const preferences = data.e[studentKey];
         const student = document.createElement('div');
         student.className = 'basicItem';
-        student.textContent = `School ${index} : [${preferences.join(', ')}]`;
+        student.innerHTML = `🏫 <b>School ${index}</b> : <small>[${preferences.join(', ')}]</small>`;
         rightColumn.appendChild(student);
     }
     
@@ -67,16 +75,21 @@ function createResult(data) {
     const rapport = document.querySelector('.rapport');
     // Vider le contenu précédent
     rapport.innerHTML = '';
-    
+
     const result_data = data.metadata.result;
     const stats_data = data.metadata.satisfaction;
-    
-    // Section Results
+
     const resultSection = document.createElement('div');
     resultSection.className = 'result-section';
+
+    let formattedContent = '';
+    result_data.forEach((student, school) => {
+        formattedContent += `<div class="student-assignment">Student ${student} : School ${school}</div>`;
+    });
+
     resultSection.innerHTML = `
         <h3>📊 Results</h3>
-        <div class="result-content">${result_data}</div>
+        <div class="result-content">${formattedContent}</div>
     `;
     
     // Section Statistics
