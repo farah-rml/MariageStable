@@ -4,14 +4,21 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+	<script src="https://d3js.org/d3.v7.min.js"></script>
+
 	<title>Mariage Stable</title>
 </head>
 <body>
 	<h1>Mariage Stable Démo</h1>
-	<form method="post" action="/">
-		<input type="number" name="number" id="number" value="5">
-		<input type="submit" value="Start Mariage Stable" name="start" />
-	</form>
+	<input type="number" name="number" id="number" value="5">
+	<button id="generate-btn">Generate</button>
+	<div class="visual"></div>
+	<div class="rapport"></div>
+	<button id="calculate-btn">Launch Mariage Stable</button>
+
+	<script src="{{ url_for('static', filename='serve.js')}}"></script>
 	
 </body>
 </html>
